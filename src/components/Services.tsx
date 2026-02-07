@@ -90,11 +90,10 @@ export default function Services() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {/* Quality Assurance */}
           <motion.div 
             variants={fadeInUp}
             whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent dark:hover:border-blue-900"
+            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
               <ShieldCheck className="text-white" size={32} />
@@ -102,7 +101,7 @@ export default function Services() {
             <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
               Quality Assurance
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               Our Quality Assurance Team is the totality of the arrangements made with the object of ensuring that our pharmaceutical products are of good quality, as required for their intended use. There are approved standard operating procedures for each and every activity carried out at the facility.
             </p>
           </motion.div>
@@ -111,7 +110,7 @@ export default function Services() {
           <motion.div 
             variants={fadeInUp}
             whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent dark:hover:border-blue-900"
+            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
               <Microscope className="text-white" size={32} />
@@ -119,7 +118,7 @@ export default function Services() {
             <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
               Quality Control (QC)
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               Stringent quality systems are in place at every gateway right from procurement to final release of finished products. All our products undergo an extensive quality control test as per international norms.
             </p>
           </motion.div>
@@ -128,7 +127,7 @@ export default function Services() {
           <motion.div 
             variants={fadeInUp}
             whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent dark:hover:border-blue-900"
+            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
               <Users className="text-white" size={32} />
@@ -136,7 +135,7 @@ export default function Services() {
             <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
               Experienced Staff
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               We recruit experienced staff for each section including the Analysis Department, Chemist Department, Tablets and Capsules section, Packing Division, and Material Store Departments to ensure operational excellence.
             </p>
           </motion.div>

@@ -134,9 +134,9 @@ export default function About() {
               key={index} 
               variants={fadeInUp}
               whileHover={{ y: -10 }}
-              className="text-center p-6 rounded-2xl hover:bg-gray-50 transition-colors"
+              className="text-center p-6 rounded-2xl hover:bg-blue-50 dark:hover:bg-slate-900/50 transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-900 group"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
                 <value.icon className="text-white" size={28} />
               </div>
               <h3 className="text-xl font-bold text-blue-900 dark:text-white mb-3">
