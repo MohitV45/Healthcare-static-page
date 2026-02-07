@@ -1,147 +1,194 @@
-import { Pill, Microscope, ShieldCheck, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Pill, Microscope, ShieldCheck, Users, BarChart3, Clock, Calendar, TrendingUp } from 'lucide-react';
 
 export default function Services() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
+  const capacities = [
+    { 
+      type: 'Tablets', 
+      icon: Pill,
+      shift: '4,00,000', 
+      month: '1 Crore', 
+      year: '12 Crores',
+      color: 'amber'
+    },
+    { 
+      type: 'Capsules', 
+      icon: Pill,
+      shift: '1,00,000', 
+      month: '25 Lakhs', 
+      year: '3 Crores',
+      color: 'emerald'
     }
-  };
-
-  const fadeInUp: any = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
+  ];
 
   return (
-    <section id="services" className="py-24 bg-gray-50 dark:bg-slate-900 overflow-hidden transition-colors duration-300">
+    <section id="services" className="py-24 bg-slate-50 overflow-hidden relative section-divider">
+      {/* Bottom gradient fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2 text-amber-600 font-bold tracking-widest text-xs uppercase mb-4">
+              <TrendingUp size={16} />
+              Operational Scale
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              Manufacturing <br />Capabilities & Capacity
+            </h2>
+            <p className="text-gray-600 text-lg">
+              In our firm we produce high-precision pharmaceutical formulations. The following output matrix details our current operational capacity per annum.
+            </p>
+          </div>
+          <div className="hidden md:block">
+            <div className="p-6 bg-white border-t-4 border-amber-600 shadow-lg rounded-sm">
+              <div className="text-xs text-gray-500 font-bold uppercase mb-1">System Status</div>
+              <div className="text-green-600 font-bold flex items-center gap-2">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                Fully Operational
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Capacity Dashboard Cards */}
         <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          className="mb-24"
         >
-          <div className="inline-block bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            Facilities & Quality
+          {/* Header Bar */}
+          <div className="bg-slate-900 px-8 py-5 text-white flex items-center justify-between rounded-t-lg">
+            <h3 className="font-bold tracking-wider flex items-center gap-3">
+              <BarChart3 size={20} className="text-amber-500" />
+              ANNUAL PRODUCTION MATRIX
+            </h3>
+            <span className="text-xs text-slate-400 font-mono bg-slate-800 px-3 py-1 rounded">DOC_CAPACITY_2024_V1</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 dark:text-white mb-4">
-            Our Manufacturing Capabilities
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            World-class infrastructure dedicated to excellence in pharmaceutical manufacturing and quality standards.
-          </p>
-        </motion.div>
 
-        {/* Facilities Table */}
-        <motion.div 
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-16 overflow-x-auto border border-gray-100 dark:border-slate-700"
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <Pill className="text-teal-600" size={28} />
-            <h3 className="text-2xl font-bold text-blue-900 dark:text-white">Production Capacity</h3>
+          {/* Dashboard Grid */}
+          <div className="bg-white border border-gray-100 shadow-xl rounded-b-lg overflow-hidden">
+            {capacities.map((cap, i) => (
+              <div 
+                key={i} 
+                className={`p-8 ${i !== capacities.length - 1 ? 'border-b-2 border-dashed border-gray-100' : ''} hover:bg-slate-50/50 transition-colors`}
+              >
+                {/* Product Header */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`p-4 ${cap.color === 'amber' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'} rounded-xl shadow-sm`}>
+                    <cap.icon size={28} strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-black text-slate-900 tracking-tight">{cap.type}</h4>
+                    <p className="text-sm text-gray-400 font-medium">Production Capacity</p>
+                  </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Per Shift */}
+                  <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 transition-colors group">
+                    <div className="flex items-center gap-2 text-gray-400 mb-3">
+                      <Clock size={16} />
+                      <span className="text-xs font-bold uppercase tracking-wider">Per Shift</span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors">{cap.shift}</span>
+                      <span className="text-sm text-gray-400 font-semibold">Units</span>
+                    </div>
+                  </div>
+
+                  {/* Monthly */}
+                  <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 transition-colors group">
+                    <div className="flex items-center gap-2 text-gray-400 mb-3">
+                      <Calendar size={16} />
+                      <span className="text-xs font-bold uppercase tracking-wider">Monthly Yield</span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors">{cap.month}</span>
+                      <span className="text-sm text-gray-400 font-semibold">Units</span>
+                    </div>
+                  </div>
+
+                  {/* Annual - Highlighted */}
+                  <div className={`${cap.color === 'amber' ? 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200'} rounded-xl p-6 border-2 shadow-sm group`}>
+                    <div className={`flex items-center gap-2 ${cap.color === 'amber' ? 'text-amber-600' : 'text-emerald-600'} mb-3`}>
+                      <TrendingUp size={16} />
+                      <span className="text-xs font-bold uppercase tracking-wider">Annual Capacity</span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className={`text-4xl font-black ${cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700'}`}>{cap.year}</span>
+                      <span className={`text-sm font-bold ${cap.color === 'amber' ? 'text-amber-500' : 'text-emerald-500'}`}>UNITS</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 italic">
-            In our firm we produce tablet and capsules as per the schedule basis and the number of units per year production are provided below:
-          </p>
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-blue-50 dark:bg-slate-700/50">
-                <th className="p-4 border-b dark:border-slate-600 font-bold text-blue-900 dark:text-white rounded-tl-xl">Production Capacity</th>
-                <th className="p-4 border-b dark:border-slate-600 font-bold text-blue-900 dark:text-white">In Per Shift</th>
-                <th className="p-4 border-b dark:border-slate-600 font-bold text-blue-900 dark:text-white">In Per Month</th>
-                <th className="p-4 border-b dark:border-slate-600 font-bold text-blue-900 dark:text-white rounded-tr-xl">In Per Year</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
-                <td className="p-4 border-b dark:border-slate-700 font-semibold text-gray-700 dark:text-gray-300">Tablets</td>
-                <td className="p-4 border-b dark:border-slate-700 text-gray-600 dark:text-gray-400">4,00,000 Tablets</td>
-                <td className="p-4 border-b dark:border-slate-700 text-gray-600 dark:text-gray-400">1 Crores Tablets</td>
-                <td className="p-4 border-b dark:border-slate-700 text-gray-600 dark:text-gray-400">12 Crores Tablets</td>
-              </tr>
-              <tr className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors">
-                <td className="p-4 text-gray-700 dark:text-gray-300 font-semibold">Capsules</td>
-                <td className="p-4 text-gray-600 dark:text-gray-400">1,00,000 Capsules</td>
-                <td className="p-4 text-gray-600 dark:text-gray-400">25 lakhs Capsules</td>
-                <td className="p-4 text-gray-600 dark:text-gray-400">3 Crores Capsules</td>
-              </tr>
-            </tbody>
-          </table>
         </motion.div>
 
-        <motion.div 
-          className="grid md:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
+        {/* Quality Commitment Section */}
+        <div className="grid lg:grid-cols-2 gap-16">
           <motion.div 
-            variants={fadeInUp}
-            whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
-              <ShieldCheck className="text-white" size={32} />
+            <div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Relentless Quality Systems (QA/QC)</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Reltsen maintains a relentless focus on Quality Control (QC) and Quality Assurance (QA). Our systems are rooted in the belief that quality management defines organization-wide competences.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
-              Quality Assurance
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Our Quality Assurance Team is the totality of the arrangements made with the object of ensuring that our pharmaceutical products are of good quality, as required for their intended use. There are approved standard operating procedures for each and every activity carried out at the facility.
-            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-500 hover:shadow-md transition-all rounded-lg">
+                <ShieldCheck className="text-amber-600 mb-4" size={32} />
+                <h4 className="font-bold text-slate-900 mb-2">Quality Assurance</h4>
+                <p className="text-sm text-gray-500">Totality of arrangements ensuring products meet international intended use standards.</p>
+              </div>
+              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-500 hover:shadow-md transition-all rounded-lg">
+                <Microscope className="text-amber-600 mb-4" size={32} />
+                <h4 className="font-bold text-slate-900 mb-2">Quality Control</h4>
+                <p className="text-sm text-gray-500">Stringent testing at every gateway from procurement to final release.</p>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Quality Control */}
           <motion.div 
-            variants={fadeInUp}
-            whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-slate-900 p-10 text-white relative flex flex-col justify-center overflow-hidden rounded-xl"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
-              <Microscope className="text-white" size={32} />
+            <div className="relative z-10">
+              <Users className="text-amber-500 mb-6" size={48} />
+              <h3 className="text-3xl font-bold mb-6 italic">"Expertise in Every Unit."</h3>
+              <p className="text-slate-300 text-lg leading-relaxed mb-8">
+                We recruit specialized staff for every department—Analysis, Chemistry, Manufacturing, and Material Storage. Our team of chemists and engineers ensures operational excellence in every section.
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-[10px] font-bold text-amber-400">MT</div>
+                  ))}
+                </div>
+                <span className="text-sm text-slate-400 font-bold uppercase tracking-tighter">Highly Specialized Staff</span>
+              </div>
             </div>
-            <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
-              Quality Control (QC)
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Stringent quality systems are in place at every gateway right from procurement to final release of finished products. All our products undergo an extensive quality control test as per international norms.
-            </p>
+            {/* Background pattern */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-3xl -mr-32 -mt-32"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/5 blur-2xl -ml-24 -mb-24"></div>
           </motion.div>
+        </div>
 
-          {/* Experienced Staff */}
-          <motion.div 
-            variants={fadeInUp}
-            whileHover={{ y: -10 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all group border border-transparent hover:border-blue-100 dark:hover:border-blue-900"
-          >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
-              <Users className="text-white" size={32} />
-            </div>
-            <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
-              Experienced Staff
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              We recruit experienced staff for each section including the Analysis Department, Chemist Department, Tablets and Capsules section, Packing Division, and Material Store Departments to ensure operational excellence.
-            </p>
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );
 }
-

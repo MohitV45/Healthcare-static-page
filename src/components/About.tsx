@@ -1,153 +1,128 @@
-import { Target, Heart, TrendingUp, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { History, Factory, Award, ShieldCheck } from 'lucide-react';
 
 export default function About() {
-  const stats = [
-    { number: '14+', label: 'Years of Excellence' },
-    { number: '500+', label: 'Products' },
-    { number: '50K+', label: 'Satisfied Patients' },
-    { number: '200+', label: 'Healthcare Partners' }
+  const certifications = [
+    "WHO-GMP Certified Facility",
+    "ISO 9001:2015 Standards",
+    "Schedule M Compliant",
+    "Pollution Board Licensed"
   ];
-
-  const values = [
-    {
-      icon: Target,
-      title: 'Our Mission',
-      description: 'To provide accessible, affordable, and high-quality pharmaceutical solutions that improve lives and contribute to a healthier society.'
-    },
-    {
-      icon: Heart,
-      title: 'Our Values',
-      description: 'Integrity, innovation, and patient-centricity guide every decision we make. We believe in ethical practices and transparent operations.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Our Vision',
-      description: 'To be a leading pharmaceutical company recognized for excellence in quality, innovation, and commitment to global healthcare advancement.'
-    }
-  ];
-
-  const fadeInUp: any = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
 
   return (
-    <section id="about" className="py-24 bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
+    <section id="about" className="py-24 bg-white overflow-hidden relative section-divider">
+      {/* Top gradient fade from previous section */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-slate-50 to-transparent pointer-events-none"></div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-          >
-            <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-900 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              About Reltsen Health Care
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 dark:text-white mb-6">
-              14 Years of Healthcare Heritage
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Reltsen Health Care was established in the year 2011 and started its operations as a Medium Scale Industry in the centrally located and industrial area at Union Territory of Puducherry, India.
-            </p>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Reltsen Health Care is one of the reputed manufacturers of finished pharmaceutical formulations doing contract manufacturing for most of the leading companies in India.
-            </p>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              The facility complies with cGMP Standards & Revised Schedule ‘M’. From inception in 2024 the company has reached its present status as one of the reputed pharmaceutical manufacturing companies in India.
-            </p>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Reltsen Health Care is restructured as per the “Schedule M” and installed “Air Handling Units” and centralized air condition in the remaining areas (section wise). The site has adequate open space around it and the disposal of wastes comply as per norms of pollution department.
-            </p>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Reltsen Health Care holds the appropriate license from the “Puducherry Pollution Control Board” for maintaining the effluent tank and disposals of other wastes are done as per procedures laid out.
-            </p>
-            <div className="space-y-3">
-              {[
-                "WHO-GMP and ISO certified manufacturing facilities",
-                "Comprehensive product portfolio across therapeutic segments",
-                "Nationwide distribution network with cold chain logistics"
-              ].map((text, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + (i * 0.1) }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-3"
-                >
-                  <CheckCircle className="text-teal-600 flex-shrink-0 mt-1" size={20} />
-                  <span className="text-gray-700 dark:text-gray-300">{text}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+        <div className="flex flex-col lg:flex-row gap-16 items-start">
+          
+          {/* Content Side */}
+          <div className="lg:w-1/2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex items-center gap-2 text-amber-600 font-bold tracking-widest text-xs uppercase mb-4">
+                <History size={16} />
+                Our Heritage
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">
+                Established Excellence <br />
+                <span className="text-amber-600">Since 2011</span>
+              </h2>
+              
+              <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+                <p>
+                  Reltsen Health Care was established in the year 2011 as a Medium Scale Industry in the centrally located industrial area of <span className="text-slate-900 font-semibold">Puducherry, India</span>. 
+                </p>
+                <p>
+                  We have grown into a reputed manufacturer of finished pharmaceutical formulations, specializing in contract manufacturing for leading corporations across India.
+                </p>
+                <p>
+                  Our facility is fully restructured as per <span className="text-slate-900 font-semibold">Revised Schedule ‘M’</span> and equipped with centralized Air Handling Units (AHU). The site maintains expansive open spaces and waste disposal infrastructure that strictly adheres to National Pollution Control Department norms.
+                </p>
+              </div>
 
-          <motion.div 
-            className="grid grid-cols-2 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {stats.map((stat, index) => (
-              <motion.div 
-                key={index}
-                variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
-                }}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                className="bg-gradient-to-br from-blue-900 to-teal-700 p-8 rounded-2xl text-center shadow-lg"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-blue-100 font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {certifications.map((cert, i) => (
+                  <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 border-l-4 border-amber-500 rounded-r-md">
+                    <ShieldCheck className="text-amber-600" size={20} />
+                    <span className="text-slate-800 font-bold text-sm">{cert}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Visual Side */}
+          <div className="lg:w-1/2 relative">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative z-10"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1780&auto=format&fit=crop" 
+                alt="Modern Laboratory" 
+                className="rounded-sm shadow-2xl grayscale-[10%] hover:grayscale-0 transition-all duration-700"
+              />
+              
+              {/* Floating Stat Block */}
+              <div className="absolute -bottom-10 -left-10 bg-slate-900 p-8 text-white hidden md:block border-b-8 border-amber-600">
+                <div className="text-5xl font-bold mb-1">14+</div>
+                <div className="text-amber-500 font-bold uppercase tracking-widest text-xs">Years of Stability</div>
+              </div>
+            </motion.div>
+            
+            {/* Background Decorative Element */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-amber-50 opacity-[0.03] -z-10 pointer-events-none">
+              <Factory size={500} />
+            </div>
+          </div>
+
         </div>
 
-        <motion.div 
-          className="grid md:grid-cols-3 gap-8"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {values.map((value, index) => (
-            <motion.div 
-              key={index} 
-              variants={fadeInUp}
-              whileHover={{ y: -10 }}
-              className="text-center p-6 rounded-2xl hover:bg-blue-50 dark:hover:bg-slate-900/50 transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-900 group"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                <value.icon className="text-white" size={28} />
+        {/* Technical Competencies Grid */}
+        <div className="mt-24 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-16">
+          <div className="group">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <Award size={20} />
               </div>
-              <h3 className="text-xl font-bold text-blue-900 dark:text-white mb-3">
-                {value.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                {value.description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
+              Reputed Manufacturer
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              Recognized as a reliable partner for finished formulations, serving India's top pharmaceutical brands.
+            </p>
+          </div>
+          <div className="group">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <ShieldCheck size={20} />
+              </div>
+              Licensed Quality
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              Holds active licenses from the Puducherry Pollution Control Board and maintaining strict effluent tank procedures.
+            </p>
+          </div>
+          <div className="group">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <Factory size={20} />
+              </div>
+              cGMP Infrastructure
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              Modern facility equipped with integrated Air Handling Units ensuring a sterile, strictly controlled environment.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

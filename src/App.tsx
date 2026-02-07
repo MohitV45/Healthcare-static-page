@@ -14,12 +14,19 @@ function App() {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setFading(true);
-      setTimeout(() => setLoading(false), 500); // Wait for fade animation
-    }, 2000);
+    const handleLoad = () => {
+      setTimeout(() => {
+        setFading(true);
+        setTimeout(() => setLoading(false), 1000);
+      }, 2000); // 2 second loader display
+    };
 
-    return () => clearTimeout(timer);
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
   }, []);
 
   return (
@@ -28,8 +35,8 @@ function App() {
       <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300">
         <Navigation />
         <Hero />
-        <Services />
         <About />
+        <Services />
         <Products />
         <Contact />
         <Footer />

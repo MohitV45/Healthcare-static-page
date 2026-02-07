@@ -1,18 +1,25 @@
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const { theme, toggleTheme } = useTheme();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const sections = ['home', 'services', 'about', 'products', 'contact'];
     const observerOptions = {
       root: null,
-      rootMargin: '-50% 0px -50% 0px', // Trigger when section is in middle of viewport
+      rootMargin: '-20% 0px -80% 0px',
       threshold: 0
     };
 
@@ -37,7 +44,15 @@ export default function Navigation() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const navHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
       setActiveSection(id);
       setIsMenuOpen(false);
     }
@@ -45,99 +60,118 @@ export default function Navigation() {
 
   const navLinks = [
     { id: 'home', label: 'Home' },
-    { id: 'services', label: 'Facilities' },
-    { id: 'about', label: 'About Us' },
+    { id: 'about', label: 'Our Story' },
+    { id: 'services', label: 'Capabilities' },
     { id: 'products', label: 'Products' },
-    { id: 'contact', label: 'Contact Us' }
+    { id: 'contact', label: 'Inquiries' }
   ];
 
-  const getButtonClass = (id: string) => {
-    const isActive = activeSection === id;
-    return `relative px-5 py-2 font-bold transition-all duration-300 rounded-full ${
-      isActive ? 'text-white' : 'text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400'
-    }`;
-  };
-
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-sm z-50 transition-colors duration-300">
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+      scrolled 
+      ? 'bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3 shadow-sm' 
+      : 'bg-transparent py-6'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-teal-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">R</span>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-blue-900 dark:text-white">Reltsen Health Care</h1>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Caring for Life</p>
-              </div>
+        <div className="flex justify-between items-center">
+          
+          {/* Logo */}
+          <div 
+            className="flex items-center gap-2 cursor-pointer group" 
+            onClick={() => scrollToSection('home')}
+          >
+            <div className={`p-2 transition-colors duration-300 ${scrolled ? 'bg-amber-600 text-white' : 'bg-white/20 text-white'}`}>
+              <Globe size={24} className="group-hover:rotate-12 transition-transform" />
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xl font-black tracking-tighter leading-none transition-colors duration-300 ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+                RELTSEN
+              </span>
+              <span className={`text-[10px] font-bold tracking-[0.2em] transition-colors duration-300 ${scrolled ? 'text-amber-600' : 'text-amber-500'}`}>
+                HEALTH CARE
+              </span>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <button 
-                key={link.id}
-                onClick={() => scrollToSection(link.id)} 
-                className={getButtonClass(link.id)}
-              >
-                <span className="relative z-10 whitespace-nowrap">{link.label}</span>
-                {activeSection === link.id && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 bg-blue-900 dark:bg-teal-600 rounded-full shadow-lg pointer-events-none"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </button>
-            ))}
-            
-            <button
-              onClick={toggleTheme}
-              className="p-2 ml-4 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400 transition-all hover:ring-2 hover:ring-blue-100 dark:hover:ring-teal-900"
-              aria-label="Toggle Theme"
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full px-2 py-1 border border-white/10 shadow-lg">
+            <div className={`relative flex items-center p-1 rounded-full ${scrolled ? 'bg-slate-50' : 'bg-transparent'}`}>
+              {navLinks.map((link) => (
+                <button 
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)} 
+                  className={`relative px-6 py-2 text-xs font-black uppercase tracking-widest transition-all duration-500 z-10 ${
+                    activeSection === link.id 
+                      ? (scrolled ? 'text-white' : 'text-slate-900') 
+                      : (scrolled ? 'text-slate-500 hover:text-slate-900' : 'text-white/70 hover:text-white')
+                  }`}
+                >
+                  {link.label}
+                  {activeSection === link.id && (
+                    <motion.div 
+                      layoutId="nav-pill"
+                      className={`absolute inset-0 rounded-full -z-10 ${scrolled ? 'bg-amber-600' : 'bg-white'}`}
+                      transition={{ type: "spring", bounce: 0.15, duration: 0.6 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Button */}
+          <div className="hidden lg:block">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className={`px-8 py-3 rounded-sm text-xs font-bold uppercase tracking-widest transition-all duration-300 border-2 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg ${
+                scrolled 
+                ? 'border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white shadow-slate-900/10 hover:shadow-slate-900/25' 
+                : 'border-white text-white hover:bg-white hover:text-slate-900 shadow-black/10 hover:shadow-white/25'
+              }`}
             >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              Get Started
             </button>
           </div>
 
-          <div className="flex md:hidden items-center space-x-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400"
-            >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
+          {/* Mobile Toggle */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 dark:text-gray-300"
+              className={`p-2 transition-colors duration-300 ${scrolled ? 'text-slate-900' : 'text-white'}`}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 border-t dark:border-slate-800">
-          <div className="px-4 py-4 space-y-3">
-            {navLinks.map((link) => (
-              <button 
-                key={link.id}
-                onClick={() => scrollToSection(link.id)} 
-                className={`block w-full text-left py-3 px-4 rounded-xl transition ${
-                  activeSection === link.id 
-                  ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-teal-400 font-bold' 
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+          >
+            <div className="px-6 py-8 space-y-4">
+              {navLinks.map((link) => (
+                <button 
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)} 
+                  className={`block w-full text-left py-4 px-6 text-sm font-black uppercase tracking-wider transition-all ${
+                    activeSection === link.id 
+                    ? 'text-amber-600 bg-amber-50 rounded-lg' 
+                    : 'text-slate-600 hover:text-amber-600'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
-
