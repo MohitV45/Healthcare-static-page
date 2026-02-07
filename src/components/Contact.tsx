@@ -152,8 +152,8 @@ export default function Contact() {
              {contactInfo.map((info, index) => (
               <motion.div 
                 key={index} 
-                whileHover={{ x: 10, backgroundColor: theme === 'dark' ? '#1e293b' : '#f8fafc' }}
-                className="bg-white dark:bg-slate-800 p-6 rounded-xl cursor-default border border-gray-100 dark:border-transparent hover:border-blue-100 dark:hover:border-blue-900 shadow-sm"
+                whileHover={{ x: 5 }}
+                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl cursor-default border border-transparent hover:border-blue-100 dark:hover:border-blue-900 shadow-sm transition-all duration-300 hover:shadow-md"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-teal-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
@@ -166,7 +166,7 @@ export default function Contact() {
                     <p className="font-semibold text-blue-900 dark:text-blue-100">
                       {info.detail}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {info.subDetail}
                     </p>
                   </div>

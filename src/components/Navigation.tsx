@@ -53,11 +53,7 @@ export default function Navigation() {
 
   const getButtonClass = (id: string) => {
     const isActive = activeSection === id;
-    if (id === 'contact') {
-      return `bg-blue-900 dark:bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-blue-800 dark:hover:bg-teal-500 transition-all ${isActive ? 'ring-2 ring-teal-400 ring-offset-2' : ''}`;
-    }
-    
-    return `relative px-6 py-2.5 font-bold transition-all duration-300 ${
+    return `relative px-5 py-2 font-bold transition-all duration-300 rounded-full ${
       isActive ? 'text-white' : 'text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400'
     }`;
   };
@@ -80,37 +76,29 @@ export default function Navigation() {
 
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
-              link.id !== 'contact' && (
-                <button 
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)} 
-                  className={getButtonClass(link.id)}
-                >
-                  <span className="relative z-10">{link.label}</span>
-                  {activeSection === link.id && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      className="absolute inset-0 bg-blue-900 dark:bg-teal-600 rounded-full"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </button>
-              )
+              <button 
+                key={link.id}
+                onClick={() => scrollToSection(link.id)} 
+                className={getButtonClass(link.id)}
+              >
+                <span className="relative z-10 whitespace-nowrap">{link.label}</span>
+                {activeSection === link.id && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-blue-900 dark:bg-teal-600 rounded-full shadow-lg pointer-events-none"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+              </button>
             ))}
             
-            <div className="flex items-center ml-4 space-x-4">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400 transition-colors hover:bg-gray-200 dark:hover:bg-slate-700"
-                aria-label="Toggle Theme"
-              >
-                {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-              </button>
-
-              <button onClick={() => scrollToSection('contact')} className={getButtonClass('contact')}>
-                Contact Us
-              </button>
-            </div>
+            <button
+              onClick={toggleTheme}
+              className="p-2 ml-4 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400 transition-all hover:ring-2 hover:ring-blue-100 dark:hover:ring-teal-900"
+              aria-label="Toggle Theme"
+            >
+              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
           </div>
 
           <div className="flex md:hidden items-center space-x-4">
