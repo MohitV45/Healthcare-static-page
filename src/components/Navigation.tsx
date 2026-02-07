@@ -38,7 +38,7 @@ export default function Navigation() {
               Home
             </button>
             <button onClick={() => scrollToSection('services')} className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400 font-bold transition">
-              Services
+              Facilities
             </button>
             <button onClick={() => scrollToSection('about')} className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400 font-bold transition">
               About Us
@@ -84,7 +84,7 @@ export default function Navigation() {
               Home
             </button>
             <button onClick={() => scrollToSection('services')} className="block w-full text-left py-2 text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400">
-              Services
+              Facilities
             </button>
             <button onClick={() => scrollToSection('about')} className="block w-full text-left py-2 text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400">
               About Us
