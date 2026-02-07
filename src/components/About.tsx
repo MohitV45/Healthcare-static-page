@@ -59,10 +59,19 @@ export default function About() {
               14 Years of Healthcare Heritage
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Since 2011, Reltsen Health Care has been at the forefront of pharmaceutical excellence. What began as a vision to make quality healthcare accessible to all has grown into a trusted name in the industry.
+              Reltsen Health Care was established in the year 2011 and started its operations as a Medium Scale Industry in the centrally located and industrial area at Union Territory of Puducherry, India.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Our state-of-the-art manufacturing facilities, coupled with a dedicated team of healthcare professionals, enable us to deliver products that meet international quality standards while remaining affordable.
+              Reltsen Health Care is one of the reputed manufacturers of finished pharmaceutical formulations doing contract manufacturing for most of the leading companies in India.
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              The facility complies with cGMP Standards & Revised Schedule ‘M’. From inception in 2024 the company has reached its present status as one of the reputed pharmaceutical manufacturing companies in India.
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              Reltsen Health Care is restructured as per the “Schedule M” and installed “Air Handling Units” and centralized air condition in the remaining areas (section wise). The site has adequate open space around it and the disposal of wastes comply as per norms of pollution department.
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              Reltsen Health Care holds the appropriate license from the “Puducherry Pollution Control Board” for maintaining the effluent tank and disposals of other wastes are done as per procedures laid out.
             </p>
             <div className="space-y-3">
               {[
