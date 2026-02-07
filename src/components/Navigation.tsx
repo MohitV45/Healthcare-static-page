@@ -53,12 +53,12 @@ export default function Navigation() {
   const getButtonClass = (id: string) => {
     const isActive = activeSection === id;
     if (id === 'contact') {
-      return `bg-blue-900 dark:bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-blue-800 dark:hover:bg-teal-500 transition ${isActive ? 'ring-2 ring-teal-400 ring-offset-2' : ''}`;
+      return `bg-blue-900 dark:bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-blue-800 dark:hover:bg-teal-500 transition-all ${isActive ? 'ring-2 ring-teal-400 ring-offset-2' : ''}`;
     }
     
-    return isActive 
-      ? "bg-blue-900 dark:bg-teal-600 text-white px-8 py-2.5 rounded-full font-bold shadow-md transition-all duration-300 transform scale-105"
-      : "text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400 font-bold transition px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full";
+    return `relative px-6 py-2.5 font-bold transition-all duration-300 ${
+      isActive ? 'text-white' : 'text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-teal-400'
+    }`;
   };
 
   return (
@@ -77,7 +77,7 @@ export default function Navigation() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               link.id !== 'contact' && (
                 <button 
@@ -85,22 +85,31 @@ export default function Navigation() {
                   onClick={() => scrollToSection(link.id)} 
                   className={getButtonClass(link.id)}
                 >
-                  {link.label}
+                  <span className="relative z-10">{link.label}</span>
+                  {activeSection === link.id && (
+                    <motion.div
+                      layoutId="nav-pill"
+                      className="absolute inset-0 bg-blue-900 dark:bg-teal-600 rounded-full"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                 </button>
               )
             ))}
             
-            <button
-              onClick={toggleTheme}
-              className="p-2 mx-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400 transition-colors"
-              aria-label="Toggle Theme"
-            >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
+            <div className="flex items-center ml-4 space-x-4">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-teal-400 transition-colors hover:bg-gray-200 dark:hover:bg-slate-700"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              </button>
 
-            <button onClick={() => scrollToSection('contact')} className={getButtonClass('contact')}>
-              Contact Us
-            </button>
+              <button onClick={() => scrollToSection('contact')} className={getButtonClass('contact')}>
+                Contact Us
+              </button>
+            </div>
           </div>
 
           <div className="flex md:hidden items-center space-x-4">
