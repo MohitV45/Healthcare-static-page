@@ -1,10 +1,8 @@
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 
 export default function Contact() {
-  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
