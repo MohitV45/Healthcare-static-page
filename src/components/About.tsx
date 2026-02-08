@@ -48,10 +48,17 @@ export default function About() {
 
               <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {certifications.map((cert, i) => (
-                  <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 border-l-4 border-amber-500 rounded-r-md">
+                  <motion.div 
+                    key={i} 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.6 + (i * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                    className="flex items-center gap-3 p-4 bg-slate-50 border-l-4 border-amber-500 rounded-r-md"
+                  >
                     <ShieldCheck className="text-amber-600" size={20} />
                     <span className="text-slate-800 font-bold text-sm">{cert}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -60,10 +67,10 @@ export default function About() {
           {/* Visual Side */}
           <div className="lg:w-1/2 relative">
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10"
             >
               <img 
@@ -73,10 +80,16 @@ export default function About() {
               />
               
               {/* Floating Stat Block */}
-              <div className="absolute -bottom-10 -left-10 bg-slate-900 p-8 text-white hidden md:block border-b-8 border-amber-600">
+              <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute -bottom-10 -left-10 bg-slate-900 p-8 text-white hidden md:block border-b-8 border-amber-600 shadow-2xl"
+              >
                 <div className="text-5xl font-bold mb-1">14+</div>
                 <div className="text-amber-500 font-bold uppercase tracking-widest text-xs">Years of Stability</div>
-              </div>
+              </motion.div>
             </motion.div>
             
             {/* Background Decorative Element */}
@@ -89,39 +102,42 @@ export default function About() {
 
         {/* Technical Competencies Grid */}
         <div className="mt-24 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-16">
-          <div className="group">
-            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                <Award size={20} />
-              </div>
-              Reputed Manufacturer
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              Recognized as a reliable partner for finished formulations, serving India's top pharmaceutical brands.
-            </p>
-          </div>
-          <div className="group">
-            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                <ShieldCheck size={20} />
-              </div>
-              Licensed Quality
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              Holds active licenses from the Puducherry Pollution Control Board and maintaining strict effluent tank procedures.
-            </p>
-          </div>
-          <div className="group">
-            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-              <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                <Factory size={20} />
-              </div>
-              cGMP Infrastructure
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              Modern facility equipped with integrated Air Handling Units ensuring a sterile, strictly controlled environment.
-            </p>
-          </div>
+          {[
+            { 
+              icon: Award, 
+              title: "Reputed Manufacturer", 
+              text: "Recognized as a reliable partner for finished formulations, serving India's top pharmaceutical brands." 
+            },
+            { 
+              icon: ShieldCheck, 
+              title: "Licensed Quality", 
+              text: "Holds active licenses from the Puducherry Pollution Control Board and maintaining strict effluent tank procedures." 
+            },
+            { 
+              icon: Factory, 
+              title: "cGMP Infrastructure", 
+              text: "Modern facility equipped with integrated Air Handling Units ensuring a sterile, strictly controlled environment." 
+            }
+          ].map((item, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 + (i * 0.15), ease: [0.22, 1, 0.36, 1] }}
+              className="group"
+            >
+              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                  <item.icon size={20} />
+                </div>
+                {item.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {item.text}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

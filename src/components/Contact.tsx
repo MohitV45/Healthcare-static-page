@@ -102,16 +102,23 @@ export default function Contact() {
 
               <div className="space-y-10">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center shrink-0">
+                  <motion.div 
+                    key={index} 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 + (index * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center shrink-0 group-hover:bg-amber-600 transition-colors duration-300">
                       <info.icon size={20} />
                     </div>
                     <div>
                       <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider mb-1">{info.title}</h3>
-                      <p className="text-slate-900 font-medium mb-1">{info.detail}</p>
+                      <p className="text-slate-900 font-medium mb-1 group-hover:text-amber-700 transition-colors duration-300">{info.detail}</p>
                       <p className="text-xs text-gray-400 font-bold">{info.subDetail}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -120,11 +127,11 @@ export default function Contact() {
           {/* Right Column: Form */}
           <div className="lg:w-2/3">
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-slate-50 p-10 md:p-16 rounded-sm border border-gray-100"
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-white p-10 md:p-16 rounded-sm border border-gray-100 shadow-2xl shadow-slate-200/50"
             >
               <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">

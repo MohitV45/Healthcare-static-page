@@ -57,30 +57,43 @@ export default function Services() {
         </div>
 
         {/* Capacity Dashboard Cards */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-24"
-        >
+        <div className="mb-24">
           {/* Header Bar */}
-          <div className="bg-slate-900 px-8 py-5 text-white flex items-center justify-between rounded-t-lg">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-slate-900 px-8 py-5 text-white flex items-center justify-between rounded-t-lg"
+          >
             <h3 className="font-bold tracking-wider flex items-center gap-3">
               <BarChart3 size={20} className="text-amber-500" />
               ANNUAL PRODUCTION MATRIX
             </h3>
             <span className="text-xs text-slate-400 font-mono bg-slate-800 px-3 py-1 rounded">DOC_CAPACITY_2024_V1</span>
-          </div>
+          </motion.div>
 
           {/* Dashboard Grid */}
-          <div className="bg-white border border-gray-100 shadow-xl rounded-b-lg overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-white border border-gray-100 shadow-xl rounded-b-lg overflow-hidden"
+          >
             {capacities.map((cap, i) => (
               <div 
                 key={i} 
                 className={`p-8 ${i !== capacities.length - 1 ? 'border-b-2 border-dashed border-gray-100' : ''} hover:bg-slate-50/50 transition-colors`}
               >
                 {/* Product Header */}
-                <div className="flex items-center gap-4 mb-8">
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 + (i * 0.2) }}
+                  className="flex items-center gap-4 mb-8"
+                >
                   <div className={`p-4 ${cap.color === 'amber' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'} rounded-xl shadow-sm`}>
                     <cap.icon size={28} strokeWidth={2.5} />
                   </div>
@@ -88,50 +101,45 @@ export default function Services() {
                     <h4 className="text-2xl font-black text-slate-900 tracking-tight">{cap.type}</h4>
                     <p className="text-sm text-gray-400 font-medium">Production Capacity</p>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Per Shift */}
-                  <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 transition-colors group">
-                    <div className="flex items-center gap-2 text-gray-400 mb-3">
-                      <Clock size={16} />
-                      <span className="text-xs font-bold uppercase tracking-wider">Per Shift</span>
-                    </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors">{cap.shift}</span>
-                      <span className="text-sm text-gray-400 font-semibold">Units</span>
-                    </div>
-                  </div>
-
-                  {/* Monthly */}
-                  <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 transition-colors group">
-                    <div className="flex items-center gap-2 text-gray-400 mb-3">
-                      <Calendar size={16} />
-                      <span className="text-xs font-bold uppercase tracking-wider">Monthly Yield</span>
-                    </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors">{cap.month}</span>
-                      <span className="text-sm text-gray-400 font-semibold">Units</span>
-                    </div>
-                  </div>
-
-                  {/* Annual - Highlighted */}
-                  <div className={`${cap.color === 'amber' ? 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200'} rounded-xl p-6 border-2 shadow-sm group`}>
-                    <div className={`flex items-center gap-2 ${cap.color === 'amber' ? 'text-amber-600' : 'text-emerald-600'} mb-3`}>
-                      <TrendingUp size={16} />
-                      <span className="text-xs font-bold uppercase tracking-wider">Annual Capacity</span>
-                    </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className={`text-4xl font-black ${cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700'}`}>{cap.year}</span>
-                      <span className={`text-sm font-bold ${cap.color === 'amber' ? 'text-amber-500' : 'text-emerald-500'}`}>UNITS</span>
-                    </div>
-                  </div>
+                  {[
+                    { label: "Per Shift", value: cap.shift, icon: Clock, type: "normal" },
+                    { label: "Monthly Yield", value: cap.month, icon: Calendar, type: "normal" },
+                    { label: "Annual Capacity", value: cap.year, icon: TrendingUp, type: "highlight" }
+                  ].map((stat, idx) => (
+                    <motion.div 
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: 0.6 + (i * 0.2) + (idx * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                      className={stat.type === 'highlight' 
+                        ? `${cap.color === 'amber' ? 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200'} rounded-xl p-6 border-2 shadow-sm group hover:-translate-y-1.5 transition-all duration-300`
+                        : 'bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 hover:-translate-y-1.5 transition-all duration-300 group'
+                      }
+                    >
+                      <div className={`flex items-center gap-2 ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-600' : 'text-emerald-600') : 'text-gray-400'} mb-3`}>
+                        <stat.icon size={16} />
+                        <span className="text-xs font-bold uppercase tracking-wider">{stat.label}</span>
+                      </div>
+                      <div className="flex items-baseline gap-2">
+                        <span className={`${stat.type === 'highlight' ? `text-4xl font-black ${cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700'}` : 'text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors'}`}>
+                          {stat.value}
+                        </span>
+                        <span className={`text-sm font-bold ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-500' : 'text-emerald-500') : 'text-gray-400 font-semibold'}`}>
+                          UNITS
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Quality Commitment Section */}
         <div className="grid lg:grid-cols-2 gap-16">

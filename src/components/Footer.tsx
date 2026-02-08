@@ -1,4 +1,6 @@
-import { Globe, ArrowUp, Facebook, Linkedin, Instagram } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
+import logo from '../assets/Retlsen_logo-removebg-preview.png';
+import SocialLinks from './SocialLinks';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -45,24 +47,18 @@ export default function Footer() {
           
           {/* Brand Block */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-8 group cursor-pointer" onClick={scrollToTop}>
-              <div className="bg-slate-900 p-2 text-white group-hover:bg-amber-600 transition-colors">
-                <Globe size={24} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tighter leading-none text-slate-900">RELTSEN</span>
-                <span className="text-[10px] font-bold tracking-[0.2em] text-amber-600">HEALTH CARE</span>
-              </div>
+            <div className="mb-8 cursor-pointer group" onClick={scrollToTop}>
+              <img 
+                src={logo} 
+                alt="Retlsen Health Care" 
+                className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+              />
             </div>
             <p className="text-gray-500 text-sm leading-relaxed max-w-sm mb-8">
               Reliability, Humanity, and Caring. A leading pharmaceutical manufacturer dedicated to preserving and improving human life through superior science and manufacturing excellence.
             </p>
-            <div className="flex gap-4">
-              {[Linkedin, Facebook, Instagram].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 border border-gray-200 flex items-center justify-center text-slate-400 hover:border-amber-600 hover:text-amber-600 transition-all rounded-full">
-                  <Icon size={18} />
-                </a>
-              ))}
+            <div className="mb-8">
+              <SocialLinks />
             </div>
           </div>
 

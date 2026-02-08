@@ -1,11 +1,14 @@
-import { Menu, X, Globe } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../assets/Retlsen_logo-removebg-preview.png';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const isManualScrolling = useRef(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +27,7 @@ export default function Navigation() {
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      if (isManualScrolling.current) return;
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
@@ -44,6 +48,11 @@ export default function Navigation() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      isManualScrolling.current = true;
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+      
+      setActiveSection(id);
+      
       const navHeight = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navHeight;
@@ -53,8 +62,11 @@ export default function Navigation() {
         behavior: 'smooth'
       });
       
-      setActiveSection(id);
       setIsMenuOpen(false);
+
+      scrollTimeout.current = setTimeout(() => {
+        isManualScrolling.current = false;
+      }, 1000);
     }
   };
 
@@ -67,29 +79,27 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${
       scrolled 
-      ? 'bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3 shadow-sm' 
-      : 'bg-transparent py-6'
+      ? 'bg-white/90 backdrop-blur-xl border-gray-100 py-3 shadow-sm' 
+      : 'bg-transparent border-transparent py-6'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           
           {/* Logo */}
           <div 
-            className="flex items-center gap-2 cursor-pointer group" 
+            className="flex items-center gap-3 cursor-pointer group" 
             onClick={() => scrollToSection('home')}
           >
-            <div className={`p-2 transition-colors duration-300 ${scrolled ? 'bg-amber-600 text-white' : 'bg-white/20 text-white'}`}>
-              <Globe size={24} className="group-hover:rotate-12 transition-transform" />
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-xl font-black tracking-tighter leading-none transition-colors duration-300 ${scrolled ? 'text-slate-900' : 'text-white'}`}>
-                RELTSEN
-              </span>
-              <span className={`text-[10px] font-bold tracking-[0.2em] transition-colors duration-300 ${scrolled ? 'text-amber-600' : 'text-amber-500'}`}>
-                HEALTH CARE
-              </span>
+            <div className={`relative transition-all duration-500 ${scrolled ? 'scale-90' : 'scale-110'}`}>
+              <img 
+                src={logo} 
+                alt="Retlsen Health Care" 
+                className={`h-12 w-auto object-contain transition-all duration-300 ${
+                  scrolled ? 'brightness-100' : 'brightness-0 invert'
+                }`} 
+              />
             </div>
           </div>
 
