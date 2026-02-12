@@ -110,9 +110,7 @@ const TextType = ({
       if (isDeleting) {
         if (displayedText === '') {
           setIsDeleting(false);
-          if (currentTextIndex === textArray.length - 1 && !loop) {
-            return;
-          }
+          if (currentTextIndex === textArray.length - 1 && !loop) return;
 
           if (onSentenceComplete) {
             onSentenceComplete(textArray[currentTextIndex], currentTextIndex);
@@ -128,13 +126,11 @@ const TextType = ({
         }
       } else {
         if (currentCharIndex < processedText.length) {
-          timeout = setTimeout(
-            () => {
-              setDisplayedText(prev => prev + processedText[currentCharIndex]);
-              setCurrentCharIndex(prev => prev + 1);
-            },
-            variableSpeed ? getRandomSpeed() : typingSpeed
-          );
+          const speed = variableSpeed ? getRandomSpeed() : typingSpeed;
+          timeout = setTimeout(() => {
+            setDisplayedText(prev => prev + processedText[currentCharIndex]);
+            setCurrentCharIndex(prev => prev + 1);
+          }, speed);
         } else if (textArray.length >= 1) {
           if (!loop && currentTextIndex === textArray.length - 1) return;
           timeout = setTimeout(() => {

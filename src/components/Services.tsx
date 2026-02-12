@@ -22,7 +22,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-slate-50 overflow-hidden relative section-divider">
+    <section id="services" className="py-24 bg-gray-50 overflow-hidden relative section-divider">
       {/* Bottom gradient fade to next section */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
       
@@ -31,7 +31,7 @@ export default function Services() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2 text-amber-600 font-bold tracking-widest text-xs uppercase mb-4">
+            <div className="flex items-center gap-2 text-amber-700 font-bold tracking-widest text-xs uppercase mb-4">
               <TrendingUp size={16} />
               Operational Scale
             </div>
@@ -43,12 +43,12 @@ export default function Services() {
             </p>
           </div>
           <div className="hidden md:block">
-            <div className="p-6 bg-white border-t-4 border-amber-600 shadow-lg rounded-sm">
-              <div className="text-xs text-gray-500 font-bold uppercase mb-1">System Status</div>
-              <div className="text-green-600 font-bold flex items-center gap-2">
+            <div className="p-6 bg-white border-t-4 border-amber-700 shadow-lg rounded-sm">
+              <div className="text-xs text-gray-600 font-bold uppercase mb-1">System Status</div>
+              <div className="text-emerald-700 font-bold flex items-center gap-1">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
                 </span>
                 Fully Operational
               </div>
@@ -70,7 +70,7 @@ export default function Services() {
               <BarChart3 size={20} className="text-amber-500" />
               ANNUAL PRODUCTION MATRIX
             </h3>
-            <span className="text-xs text-slate-400 font-mono bg-slate-800 px-3 py-1 rounded">DOC_CAPACITY_2024_V1</span>
+            <span className="text-xs text-zinc-400 font-mono bg-zinc-800 px-3 py-1 rounded">DOC_CAPACITY_2024_V1</span>
           </motion.div>
 
           {/* Dashboard Grid */}
@@ -90,8 +90,8 @@ export default function Services() {
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 + (i * 0.2) }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="flex items-center gap-4 mb-8"
                 >
                   <div className={`p-4 ${cap.color === 'amber' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'} rounded-xl shadow-sm`}>
@@ -99,7 +99,7 @@ export default function Services() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-black text-slate-900 tracking-tight">{cap.type}</h4>
-                    <p className="text-sm text-gray-400 font-medium">Production Capacity</p>
+                    <p className="text-sm text-gray-500 font-medium">Production Capacity</p>
                   </div>
                 </motion.div>
 
@@ -112,16 +112,16 @@ export default function Services() {
                   ].map((stat, idx) => (
                     <motion.div 
                       key={idx}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: 0.6 + (i * 0.2) + (idx * 0.1), ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.4, delay: i * 0.1 }}
                       className={stat.type === 'highlight' 
-                        ? `${cap.color === 'amber' ? 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200'} rounded-xl p-6 border-2 shadow-sm group hover:-translate-y-1.5 transition-all duration-300`
-                        : 'bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 hover:-translate-y-1.5 transition-all duration-300 group'
+                        ? `${cap.color === 'amber' ? 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200'} rounded-xl p-6 border-2 shadow-sm group transition-all duration-300`
+                        : 'bg-slate-50 rounded-xl p-6 border border-gray-100 hover:border-gray-200 transition-all duration-300 group'
                       }
                     >
-                      <div className={`flex items-center gap-2 ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-600' : 'text-emerald-600') : 'text-gray-400'} mb-3`}>
+                      <div className={`flex items-center gap-2 ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700') : 'text-slate-500'} mb-3`}>
                         <stat.icon size={16} />
                         <span className="text-xs font-bold uppercase tracking-wider">{stat.label}</span>
                       </div>
@@ -129,7 +129,7 @@ export default function Services() {
                         <span className={`${stat.type === 'highlight' ? `text-4xl font-black ${cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700'}` : 'text-3xl font-black text-slate-700 group-hover:text-slate-900 transition-colors'}`}>
                           {stat.value}
                         </span>
-                        <span className={`text-sm font-bold ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-500' : 'text-emerald-500') : 'text-gray-400 font-semibold'}`}>
+                        <span className={`text-sm font-bold ${stat.type === 'highlight' ? (cap.color === 'amber' ? 'text-amber-700' : 'text-emerald-700') : 'text-slate-500 font-semibold'}`}>
                           UNITS
                         </span>
                       </div>
@@ -156,15 +156,15 @@ export default function Services() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-500 hover:shadow-md transition-all rounded-lg">
-                <ShieldCheck className="text-amber-600 mb-4" size={32} />
+              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-700 hover:shadow-md transition-all rounded-lg">
+                <ShieldCheck className="text-amber-700 mb-4" size={32} />
                 <h4 className="font-bold text-slate-900 mb-2">Quality Assurance</h4>
-                <p className="text-sm text-gray-500">Totality of arrangements ensuring products meet international intended use standards.</p>
+                <p className="text-sm text-slate-600">Totality of arrangements ensuring products meet international intended use standards.</p>
               </div>
-              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-500 hover:shadow-md transition-all rounded-lg">
-                <Microscope className="text-amber-600 mb-4" size={32} />
+              <div className="p-6 bg-white border border-gray-100 shadow-sm hover:border-amber-700 hover:shadow-md transition-all rounded-lg">
+                <Microscope className="text-amber-700 mb-4" size={32} />
                 <h4 className="font-bold text-slate-900 mb-2">Quality Control</h4>
-                <p className="text-sm text-gray-500">Stringent testing at every gateway from procurement to final release.</p>
+                <p className="text-sm text-slate-600">Stringent testing at every gateway from procurement to final release.</p>
               </div>
             </div>
           </motion.div>

@@ -2,44 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* ======================
+   BASE
+====================== */
 @layer base {
+
   :root {
     --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   html {
-    scroll-behavior: smooth;
+    @apply bg-slate-900;
+    margin: 0;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  body {
-    @apply bg-white text-slate-900;
-    /* Removed transition to avoid conflicts with Framer Motion */
+  body, #root {
+    @apply bg-slate-900 text-slate-100;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* Professional Premium Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
+  h1, h2, h3, h4, h5, h6, .bold-heading {
+    font-family: 'Outfit', sans-serif;
   }
 
-  ::-webkit-scrollbar-track {
-    background: #fdfdfd;
-  }
 
-  ::-webkit-scrollbar-thumb {
-    background: #e2e8f0;
-    border-radius: 100px;
-    transition: background 0.3s var(--ease-cinematic);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #d4d4d8;
-  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #444; border-radius: 100px; }
+  ::-webkit-scrollbar-thumb:hover { background: #666; }
 }
 
+
+/* ======================
+   COMPONENTS
+====================== */
 @layer components {
-  /* Section Divider */
+
+  .glass-panel {
+    @apply bg-white dark:bg-slate-900;
+  }
+
+  .glass-card {
+    @apply bg-white/90 dark:bg-slate-950/90 border border-white/20;
+    transition: transform .35s var(--ease-cinematic), opacity .35s;
+  }
+
+  /* GPU ONLY animation (performance fix) */
+  .glass-card:hover {
+    transform: translateY(-8px);
+  }
+
   .section-divider {
     @apply relative;
   }
@@ -49,10 +71,11 @@
     @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-50;
   }
 
-  /* Fade-in animation for sections */
+  /* only opacity + transform (no layout thrashing) */
   .fade-in-section {
-    @apply opacity-0 translate-y-12 transition-all duration-1000;
-    transition-timing-function: var(--ease-cinematic);
+    @apply opacity-0 translate-y-12;
+    transition: transform 1.2s var(--ease-cinematic), opacity 1.2s var(--ease-cinematic);
+    will-change: transform, opacity;
   }
 
   .fade-in-section.visible {
@@ -60,25 +83,32 @@
   }
 }
 
+
+/* ======================
+   UTILITIES
+====================== */
 @layer utilities {
-  /* Smooth reveal animation */
+
   .animate-fade-up {
-    animation: fadeUp 1.2s var(--ease-cinematic) forwards;
+    animation: fadeUp .8s var(--ease-cinematic) forwards;
   }
 
   @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity:0; transform:translateY(24px); }
+    to { opacity:1; transform:translateY(0); }
   }
 
-  /* Text balance for headlines */
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

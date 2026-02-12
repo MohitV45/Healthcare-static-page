@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { History, Factory, Award, ShieldCheck } from 'lucide-react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function About() {
+  const isMobile = useIsMobile();
   const certifications = [
     "WHO-GMP Certified Facility",
     "ISO 9001:2015 Standards",
@@ -25,18 +27,18 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center gap-2 text-amber-600 font-bold tracking-widest text-xs uppercase mb-4">
+              <div className="flex items-center gap-2 text-amber-700 font-bold tracking-widest text-xs uppercase mb-4">
                 <History size={16} />
                 Our Heritage
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-8 leading-tight animate-reveal">
                 Established Excellence <br />
-                <span className="text-amber-600">Since 2011</span>
+                <span className="text-amber-700">Since 2011</span>
               </h2>
               
-              <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
-                <p>
-                  Reltsen Health Care was established in the year 2011 as a Medium Scale Industry in the centrally located industrial area of <span className="text-slate-900 font-semibold">Puducherry, India</span>. 
+              <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                <p className="animate-reveal [animation-delay:200ms]">
+                  Reltsen Health Care was established in the year 2011 as a Medium Scale Industry in the centrally located industrial area of <span className="text-slate-900 dark:text-slate-200 font-semibold">Puducherry, India</span>. 
                 </p>
                 <p>
                   We have grown into a reputed manufacturer of finished pharmaceutical formulations, specializing in contract manufacturing for leading corporations across India.
@@ -53,10 +55,14 @@ export default function About() {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.6 + (i * 0.1), ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center gap-3 p-4 bg-slate-50 border-l-4 border-amber-500 rounded-r-md"
+                    transition={{ 
+                      duration: 0.4, 
+                      delay: isMobile ? (i * 0.1) : (0.2 + (i * 0.15)), 
+                      ease: [0.22, 1, 0.36, 1] 
+                    }}
+                    className="flex items-center gap-3 p-4 bg-slate-50 border-l-4 border-amber-700 rounded-r-md"
                   >
-                    <ShieldCheck className="text-amber-600" size={20} />
+                    <ShieldCheck className="text-amber-700" size={20} />
                     <span className="text-slate-800 font-bold text-sm">{cert}</span>
                   </motion.div>
                 ))}
@@ -74,8 +80,10 @@ export default function About() {
               className="relative z-10"
             >
               <img 
-                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1780&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" 
                 alt="Modern Laboratory" 
+                width="800"
+                height="600"
                 className="rounded-sm shadow-2xl grayscale-[10%] hover:grayscale-0 transition-all duration-700"
               />
               
@@ -101,7 +109,20 @@ export default function About() {
         </div>
 
         {/* Technical Competencies Grid */}
-        <div className="mt-24 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-16">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+          className="mt-24 grid md:grid-cols-3 gap-12 border-t border-gray-100 dark:border-slate-800 pt-16"
+        >
           {[
             { 
               icon: Award, 
@@ -121,24 +142,25 @@ export default function About() {
           ].map((item, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 + (i * 0.15), ease: [0.22, 1, 0.36, 1] }}
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)' }
+              }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-                <div className="p-2 bg-amber-100 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
+                <div className="p-2.5 bg-amber-100 dark:bg-slate-800 text-amber-700 dark:text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-amber-500/20">
                   <item.icon size={20} />
                 </div>
                 {item.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 dark:text-slate-400 leading-relaxed text-base">
                 {item.text}
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,0 +1,12 @@
+﻿
+> vite-react-typescript-starter@0.0.0 lint
+> eslint .
+
+
+C:\Users\Mohit\Downloads\Pharma-main\Pharma-main\src\utils\performance.ts
+   5:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   5:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 3 problems (3 errors, 0 warnings)
+

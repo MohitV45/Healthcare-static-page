@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8fafc;
+  background-color: #000000;
   z-index: 9999;
   transition: opacity 0.5s ease;
 }
@@ -15,7 +15,7 @@
 }
 
 .dark .loader-container {
-  background-color: #020617;
+  background-color: #000000;
 }
 
 .loader-wrapper {

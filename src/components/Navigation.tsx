@@ -1,7 +1,8 @@
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../assets/Retlsen_logo-removebg-preview.png';
+import logo from '../assets/logo-small.webp';
+
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,9 +13,11 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const offset = window.pageYOffset || document.documentElement.scrollTop;
+      setScrolled(offset > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -55,7 +58,7 @@ export default function Navigation() {
       
       const navHeight = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      const offsetPosition = elementPosition + window.scrollY - navHeight;
 
       window.scrollTo({
         top: offsetPosition,
@@ -79,48 +82,56 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${
-      scrolled 
-      ? 'bg-white/90 backdrop-blur-xl border-gray-100 py-3 shadow-sm' 
-      : 'bg-transparent border-transparent py-6'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav 
+      className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-500 transform-gpu will-change-transform ${
+        scrolled 
+        ? 'bg-white py-3 shadow-lg border-b border-black/5' 
+        : 'bg-transparent py-5'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-[1001]">
         <div className="flex justify-between items-center">
           
           {/* Logo */}
           <div 
-            className="flex items-center gap-3 cursor-pointer group" 
-            onClick={() => scrollToSection('home')}
+            className="flex items-center gap-3 cursor-pointer group select-none" 
+            onClick={() => {
+              scrollToSection('home');
+              setIsMenuOpen(false);
+            }}
           >
-            <div className={`relative transition-all duration-500 ${scrolled ? 'scale-90' : 'scale-110'}`}>
+            <div className={`relative transition-all duration-500 will-change-transform ${scrolled ? 'scale-90' : 'scale-110'}`}>
               <img 
                 src={logo} 
                 alt="Retlsen Health Care" 
-                className={`h-12 w-auto object-contain transition-all duration-300 ${
-                  scrolled ? 'brightness-100' : 'brightness-0 invert'
-                }`} 
+                width="180"
+                height="50"
+                className="h-10 sm:h-12 w-auto object-contain transition-all duration-300"
+                style={{
+                  filter: scrolled ? 'none' : 'brightness(0) invert(1)'
+                }}
               />
             </div>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full px-2 py-1 border border-white/10 shadow-lg">
-            <div className={`relative flex items-center p-1 rounded-full ${scrolled ? 'bg-slate-50' : 'bg-transparent'}`}>
+          <div className="hidden md:flex items-center">
+            <div className={`relative flex items-center p-1 rounded-full transition-all duration-500 ${scrolled ? 'bg-black/5' : 'bg-white/10 border border-white/20 shadow-inner shadow-white/5'}`}>
               {navLinks.map((link) => (
                 <button 
-                  key={link.id}
+                   key={link.id}
                   onClick={() => scrollToSection(link.id)} 
-                  className={`relative px-6 py-2 text-xs font-black uppercase tracking-widest transition-all duration-500 z-10 ${
+                  className={`relative px-6 py-2 text-xs font-black uppercase tracking-[0.1em] transition-all duration-300 z-10 ${
                     activeSection === link.id 
-                      ? (scrolled ? 'text-white' : 'text-slate-900') 
-                      : (scrolled ? 'text-slate-500 hover:text-slate-900' : 'text-white/70 hover:text-white')
+                      ? 'text-white' 
+                      : (scrolled ? 'text-slate-800 hover:text-amber-700' : 'text-white/70 hover:text-white')
                   }`}
                 >
-                  {link.label}
+                  <span className="relative z-10">{link.label}</span>
                   {activeSection === link.id && (
                     <motion.div 
                       layoutId="nav-pill"
-                      className={`absolute inset-0 rounded-full -z-10 ${scrolled ? 'bg-amber-600' : 'bg-white'}`}
+                      className="absolute inset-0 rounded-full -z-10 bg-amber-600"
                       transition={{ type: "spring", bounce: 0.15, duration: 0.6 }}
                     />
                   )}
@@ -133,9 +144,9 @@ export default function Navigation() {
           <div className="hidden lg:block">
             <button 
               onClick={() => scrollToSection('contact')}
-              className={`px-8 py-3 rounded-sm text-xs font-bold uppercase tracking-widest transition-all duration-300 border-2 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg ${
+              className={`px-8 py-3 rounded-sm text-xs font-bold uppercase tracking-widest transition-all duration-300 border-2 shadow-lg hover:-translate-y-1 hover:scale-[1.02] ${
                 scrolled 
-                ? 'border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white shadow-slate-900/10 hover:shadow-slate-900/25' 
+                ? 'border-slate-900 bg-slate-900 text-white hover:bg-amber-700 hover:border-amber-700 shadow-slate-900/10 hover:shadow-amber-500/25' 
                 : 'border-white text-white hover:bg-white hover:text-slate-900 shadow-black/10 hover:shadow-white/25'
               }`}
             >
@@ -147,7 +158,8 @@ export default function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`p-2 transition-colors duration-300 ${scrolled ? 'text-slate-900' : 'text-white'}`}
+              className={`p-2 relative z-[1002] transition-colors duration-300 ${scrolled || isMenuOpen ? 'text-slate-900' : 'text-white'}`}
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -155,29 +167,43 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed inset-0 z-[1000] bg-white md:hidden flex flex-col pt-24 pb-8 px-6 overflow-y-auto h-screen w-screen"
           >
-            <div className="px-6 py-8 space-y-4">
-              {navLinks.map((link) => (
-                <button 
+            <div className="flex flex-col space-y-6">
+              {navLinks.map((link, index) => (
+                <motion.button 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
                   key={link.id}
                   onClick={() => scrollToSection(link.id)} 
-                  className={`block w-full text-left py-4 px-6 text-sm font-black uppercase tracking-wider transition-all ${
+                  className={`block w-full text-left py-4 px-4 text-lg font-black uppercase tracking-wider border-b border-gray-100 transition-all active:bg-gray-50 ${
                     activeSection === link.id 
-                    ? 'text-amber-600 bg-amber-50 rounded-lg' 
-                    : 'text-slate-600 hover:text-amber-600'
+                    ? 'text-amber-700 pl-6 border-l-4 border-l-amber-700' 
+                    : 'text-slate-600 hover:text-amber-700'
                   }`}
                 >
                   {link.label}
-                </button>
+                </motion.button>
               ))}
+              
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                onClick={() => scrollToSection('contact')}
+                className="mt-8 w-full py-4 rounded-lg bg-slate-900 text-white font-bold uppercase tracking-widest shadow-lg active:scale-95 transition-transform"
+              >
+                Get Started
+              </motion.button>
             </div>
           </motion.div>
         )}
